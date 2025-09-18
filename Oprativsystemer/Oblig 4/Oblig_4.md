@@ -45,9 +45,14 @@ En prosess er et program som er aktiv på datamaskinen. Det vil si at programmet
 - Kolonnen "**UID"** angir **userID** til brukeren som eier prosessen. Hver bruker på et Linux-system har både ett brukernavn og en unik bruker_ID som er et heltall.
 
 ## 1.5 Forgrunns- og bakgrunnsprosesser
+- Når du starter et programm i shellet, kan du velge om prosessen skal kjøre som en **forgrunnsprosess** eller en **bakgrunnsprosess**
+- ### Forgrunnsprosess:
+    - Det er standardmåten å kjøre en prosess på i shellet, som brukes når du bare avslutter kommandoen som gis med å taste *return*.
+    - Fks vil denne komandoen starte programmet `cat` som en forgrunnsprosess. 
+    ![alt text](image.png)
+    - Prosessen som kjører "*cat*" vil da lese input fra standard innenhet (stdin), som i utganspunktet er tastaturet.
+    - Utskrift fra prosesse går til standrad utenhet (stdout), som er skjermen.
 
-
-
-
-
-
+- ### Bakgrunnsprosess
+    - Hvis du skal kjøre et programm som ikke trenger input fra tastatur/bruker, kan du starte det som en brakgrunnsprosess.
+    - Dette gjøres ved å gi tegnet `&` (ampersand) på komadolinjen.
