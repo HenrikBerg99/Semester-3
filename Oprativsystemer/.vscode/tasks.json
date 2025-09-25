@@ -1,0 +1,87 @@
+{
+  // Versjon for VS Code tasks
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // Bygg aktiv C-fil med GCC fra FULL STI (ingen PATH nødvendig)
+      "label": "C: Build active file (GCC full path)",
+      "type": "shell",
+
+      // ⚠️ BYTT til din faktiske sti hvis annerledes:
+      "command": "C:\\mingw64\\bin\\gcc.exe",
+
+      // args er delt opp → VS Code håndterer mellomrom i stier for deg
+      "args": [
+        // Kilder: kompilerer den åpne fila
+        "${file}",
+
+        // Output: exe ved siden av kilden, samme navn uten .c
+        "-o",
+        "${fileDirname}\\${fileBasenameNoExtension}.exe",
+
+        // Nyttige varsler og optimalisering
+        "-Wall",
+        "-Wextra",
+        "-O2",
+
+        // For POSIX-tråder (pthreads) i MinGW-w64 builds med POSIX:
+        "-pthread"
+      ],
+
+      // Kjør kompilering i samme mappe som fila
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+
+      // Gjør at feil/varsler vises i Problems-panelet
+      "problemMatcher": "$gcc",
+
+      // Ctrl+Shift+B kjører denne som standard build
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+
+      // Vis alltid output og hold en dedikert panel-fane
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+
+    {
+      // Kjør den bygde .exe-en (uavhengig av hvilken terminal du bruker)
+      "label": "C: Run active program",
+      "type": "shell",
+
+      // Bruk CMD for å sikre at .exe kjører fint fra Tasks (også om standard er PowerShell)
+      "command": "cmd",
+
+      // /c = kjør kommandoen og lukk. Siterer exe-stien for å tåle mellomrom i mappenavn.
+      "args": [
+        "/c",
+        "\"${fileDirname}\\${fileBasenameNoExtension}.exe\""
+      ],
+
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+
+    {
+      // Praktisk "bygg og kjør" i ett trykk
+      "label": "C: Build & Run",
+      "dependsOn": [
+        "C: Build active file (GCC full path)",
+        "C: Run active program"
+      ],
+      "dependsOrder": "sequence"
+    }
+  ]
+}
